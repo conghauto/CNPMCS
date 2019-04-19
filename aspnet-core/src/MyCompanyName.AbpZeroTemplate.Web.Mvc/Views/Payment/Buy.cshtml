@@ -1,0 +1,85 @@
+﻿@using System.Globalization
+@using MyCompanyName.AbpZeroTemplate.MultiTenancy.Payments;
+@model MyCompanyName.AbpZeroTemplate.Web.Models.Payment.BuyEditionViewModel
+
+@{
+    Layout = "~/Views/Account/_Layout.cshtml";
+    ViewBag.DisableTenantChange = true;
+}
+
+@section Scripts
+    {
+    <script abp-src="/view-resources/Views/Payment/Buy.js" asp-append-version="true"></script>
+}
+
+@section Styles
+    {
+    <link abp-href="/view-resources/Views/Payment/Payment.css" rel="stylesheet" type="text/css" />
+}
+<div class="m-login__signin">
+    <div class="m-login__head">
+        <h3 class="m-login__title">
+            @L("PaymentInfo")
+        </h3>
+    </div>
+    <div>
+        <input type="hidden" name="EditionId" value="@Model.Edition.Id" />
+        <input type="hidden" name="EditionPaymentType" value="@Model.EditionPaymentType" />
+        <input type="hidden" name="SubscriptionStartType" value="@Model.SubscriptionStartType" />
+
+        <div class="hint text-center mb-3">(@Model.Edition.DisplayName @L("Edition"))</div>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                <i class="fa fa-exclamation-triangle"></i> @ViewBag.ErrorMessage
+            </div>
+        }
+
+        @if (Model.Edition.MonthlyPrice.HasValue)
+        {
+            <div class="form-group">
+                <label class="m-radio m-radio-outline margin-bottom-0">
+                    <input class="form-control" type="radio" name="PaymentPeriodType"
+                           data-day-count="@((int) PaymentPeriodType.Monthly)"
+                           data-payment-period-type-amount="@(Model.Edition.MonthlyPrice.Value.ToString("0.00", CultureInfo.InvariantCulture))"
+                           value="@PaymentPeriodType.Monthly" />@L("MonthlyPrice"): $@Model.Edition.MonthlyPrice.Value.ToString("N2")
+                        <span></span>
+                    </label>
+                </div>
+            }
+
+        @if (Model.Edition.AnnualPrice.HasValue)
+        {
+            <div class="form-group">
+                <label class="m-radio m-radio-outline margin-bottom-0">
+                    <input class="form-control" type="radio" name="PaymentPeriodType"
+                           data-day-count="@((int) PaymentPeriodType.Annual)"
+                           data-payment-period-type-amount="@(Model.Edition.AnnualPrice.Value.ToString("0.00", CultureInfo.InvariantCulture))"
+                           value="@PaymentPeriodType.Annual" />@L("AnnualPrice"): $@Model.Edition.AnnualPrice.Value.ToString("N2")
+                        <span></span>
+                    </label>
+                </div>
+            }
+    </div>
+
+    <hr />
+
+    @if (Model.PaymentGateways.Any(gateway => gateway.SupportsRecurringPayments))
+    {
+        <div class="form-group">
+            <label class="m-checkbox margin-bottom-0">
+                <input class="form-control" type="checkbox" name="RecurringPaymentEnabled" value="true" /> @L("AutomaticallyBillMyAccount")
+                <span></span>
+            </label>
+        </div>
+    }
+
+    @foreach (var paymentGateway in Model.PaymentGateways)
+    {
+        <div class="form-group">
+            <button data-gateway="@paymentGateway.GatewayType" data-supports-subscription="@paymentGateway.SupportsRecurringPayments.ToString().ToLower()" class="btn btn-success btn-block checkout">@L("CheckoutWith" + paymentGateway.GatewayType)</button>
+        </div>
+    }
+
+</div>

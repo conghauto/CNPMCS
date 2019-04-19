@@ -1,0 +1,65 @@
+﻿@using System.Globalization
+@using Abp.Extensions
+@using MyCompanyName.AbpZeroTemplate.Web.Resources
+@model MyCompanyName.AbpZeroTemplate.Web.Models.Paypal.PayPalPurchaseViewModel
+@inject IWebResourceManager WebResourceManager
+@{
+    Layout = "~/Views/Account/_Layout.cshtml";
+    ViewBag.DisableTenantChange = true;
+}
+
+@section Scripts
+    {
+    <script src="https://www.paypalobjects.com/api/checkout.js" asp-append-version="true"></script>
+    <script abp-src="/view-resources/Views/PayPal/_Purchase.js" asp-append-version="true"></script>
+}
+
+<hr class="border-green" />
+<div class="form-actions">
+    <div class="form-group row">
+        <label class="col-sm-4 control-label">@L("Item")</label>
+        <div class="col-sm-8 text-right">
+            <p class="form-control-static text-bold">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-4 control-label">@L("Total")</label>
+        <div class="col-sm-8 text-right">
+            <p class="form-control-static text-bold" id="totalPrice">
+                $@(Model.Amount.ToString("N2"))
+            </p>
+        </div>
+    </div>
+</div>
+
+<form id="payPalCheckoutForm" method="post" asp-action="ConfirmPayment" asp-controller="PayPal" class="register-form">
+    <input type="hidden" name="PaymentId" value="@Model.PaymentId" />
+    <input type="hidden" name="PayPalPaymentId" value="" />
+    <input type="hidden" name="PayPalPayerId" value="" />
+    <input type="hidden" name="Amount" value="@Model.Amount.ToString("F",  new CultureInfo("en-US", false))" />
+    <input type="hidden" name="paypal-environment" value="@Model.Configuration.Environment" />
+    <input type="hidden" name="clientId" value="@Model.Configuration.ClientId" />
+
+    @if (!Model.Configuration.DemoUsername.IsNullOrEmpty() && !Model.Configuration.DemoPassword.IsNullOrEmpty())
+    {
+        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-brand alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-information" aria-label="@L("Payment")"></i>
+                <span></span>
+            </div>
+            <div class="m-alert__text">
+                <h4>
+                    @L("DemoPayPalAccount")
+                </h4>
+                <p>
+                    <span>@L("UserName"): <strong>@Model.Configuration.DemoUsername</strong></span><br />
+                    <span>@L("Password"): <strong>@Model.Configuration.DemoPassword</strong></span>
+                </p>
+            </div>
+        </div>
+    }
+
+    <div id="paypal-button"></div>
+</form>

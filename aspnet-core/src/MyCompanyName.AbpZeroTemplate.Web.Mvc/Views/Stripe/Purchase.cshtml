@@ -1,0 +1,43 @@
+﻿@using System.Globalization
+@using MyCompanyName.AbpZeroTemplate.Web.Resources
+@model MyCompanyName.AbpZeroTemplate.Web.Models.Stripe.StripePurchaseViewModel
+@inject IWebResourceManager WebResourceManager
+@{
+    Layout = "~/Views/Account/_Layout.cshtml";
+    ViewBag.DisableTenantChange = true;
+}
+
+@section Scripts
+    {
+    <script src="https://checkout.stripe.com/checkout.js" asp-append-version="true"></script>
+    <script abp-src="/view-resources/Views/Stripe/_Purchase.js" asp-append-version="true"></script>
+}
+
+<hr class="border-green" />
+<div class="form-actions">
+    <div class="form-group row">
+        <label class="col-sm-4 control-label">@L("Item")</label>
+        <div class="col-sm-8 text-right">
+            <p class="form-control-static text-bold">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-4 control-label">@L("Price")</label>
+        <div class="col-sm-8 text-right">
+            <p class="form-control-static text-bold" id="totalPrice">
+                $@(Model.Amount.ToString("N2"))
+            </p>
+        </div>
+    </div>
+</div>
+
+<form id="stripeCheckoutForm" method="post" asp-action="ConfirmPayment" asp-controller="Stripe" class="register-form">
+    <input type="hidden" name="stripeToken" value="" />
+    <input type="hidden" name="amount" value="@Model.Amount.ToString("F",  new CultureInfo("en-US", false))" />
+    <input type="hidden" name="paymentId" value="@Model.PaymentId" />
+
+    <input type="hidden" id="stripePublishableKey" value="@Model.Configuration.PublishableKey" />
+    <button id="stripe-checkout" class="stripe-checkout-button btn btn-primary btn-block">@L("Purchase")</button>
+</form>

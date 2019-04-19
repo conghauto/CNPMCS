@@ -1,0 +1,171 @@
+﻿@using Abp.Web.Mvc.Alerts
+@using MyCompanyName.AbpZeroTemplate.Localization
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameFooter
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameMenu
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameSubscriptionBar
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameTheme2Brand
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameTopBar
+
+@inject IAlertManager AlertManager
+
+@{
+    Layout = "~/Areas/AppAreaName/Views/Layout/_Layout.cshtml";
+    var theme = await GetTheme();
+}
+
+@section Styles{
+    <link rel="stylesheet" href="@(ApplicationPath)metronic/dist/html/theme2/assets/demo/theme2/base/style.bundle@(CultureHelper.IsRtl ? ".rtl":"").css" asp-append-version="true" />
+    <link rel="stylesheet" abp-href="/Common/Styles/Themes/theme2/metronic-customize.css" asp-append-version="true" />
+    <link rel="stylesheet" abp-href="/Common/Styles/Themes/theme2/metronic-customize-top-menu.css" asp-append-version="true" />
+    <link rel="stylesheet" abp-href="/Common/Styles/Themes/theme2/datatables@(CultureHelper.IsRtl ? "-rtl":"").css" asp-append-version="true" />
+    <link rel="stylesheet" abp-href="/fonts/fonts-asap-condensed.css" asp-append-version="true" />
+    @RenderSection("Styles", false)
+}
+
+@section Scripts{
+    <script abp-src="/metronic/src/js/demo/theme2/base/layout.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", false)
+}
+
+<!-- BEGIN: Header -->
+<header class="m-grid__item m-header" id="m_header"
+        @(theme.BaseSettings.Header.DesktopFixedHeader ? "m-minimize=minimize" : "")
+        @(theme.BaseSettings.Header.MobileFixedHeader ? "m-minimize-mobile=minimize" : "")
+        m-minimize-offset="10" m-minimize-mobile-offset="10">
+    <div class="m-header__top">
+        <div class="m-container @(theme.BaseSettings.Layout.LayoutType == "fluid" ? "m-container--fluid":"m-container--responsive m-container--xxl") m-container--full-height m-page__container">
+            <div class="m-stack m-stack--ver m-stack--desktop">
+
+                <!-- BEGIN: Brand -->
+                @await Component.InvokeAsync(typeof(AppAreaNameTheme2BrandViewComponent))
+                <!-- END: Brand -->
+
+                <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+
+                    <!-- BEGIN: Topbar -->
+                    @await Component.InvokeAsync(typeof(AppAreaNameTopBarViewComponent))
+                    <!-- END: Topbar -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-header__bottom">
+        @await Component.InvokeAsync(typeof(AppAreaNameMenuViewComponent), new { currentPageName = ViewBag.CurrentPageName, isLeftMenuUsed = false })
+    </div>
+    @await Component.InvokeAsync(typeof(AppAreaNameSubscriptionBarViewComponent))
+</header>
+<!-- END: Header -->
+<script id="linkedAccountsSubMenuTemplate" type="x-tmpl-mustache">
+    {{#items}}
+    <li class="m-nav__item">
+        <a href="" data-user-id="{{id}}" data-tenant-id="{{tenantId}}" class="recently-linked-user m-nav__link">
+            <span class="m-nav__link-bullet m-nav__link-bullet--dot">
+                <span></span>
+            </span>
+            <span class="m-nav__link-text">
+                {{shownUserName}}
+            </span>
+        </a>
+    </li>
+    {{/items}}
+</script>
+<script id="headerNotificationBarTemplate" type="x-tmpl-mustache">
+    <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon_not">
+        <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small {{#unreadMessageExists}}m-badge--danger{{/unreadMessageExists}}"></span>
+        <span class="m-nav__link-icon">
+            <span class="m-nav__link-icon-wrapper">
+                <i class="flaticon-alarm" aria-label="@L("Notifications")"></i>
+            </span>
+        </span>
+    </a>
+    <div class="m-dropdown__wrapper">
+        <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+        <div class="m-dropdown__inner">
+            <div class="m-dropdown__header m--align-center" style="background: url(@(ApplicationPath)metronic/dist/html/theme2/assets/demo/theme2/media/img/misc/notification_bg.jpg); background-size: cover;">
+                <span class="m-dropdown__header-title">
+                    {{unreadCount}} @L("NewNotifications")
+                </span>
+            </div>
+            <div class="m-dropdown__body">
+                <div class="m-dropdown__content">
+                    <div class="row">
+                        <div class="text-left col-md-8">
+                            {{#unreadCount}}
+                            <a href="" id="setAllNotificationsAsReadLink">@L("SetAllAsRead")</a>
+                            {{/unreadCount}}
+                        </div>
+                        <div class="text-right col-md-4">
+                            <a id="openNotificationSettingsModalLink" class="text-right" href="">@L("Settings")</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="m-scrollable" data-scrollable="true" data-max-height="250" data-mobile-max-height="200">
+                        <div class="m-list-timeline m-list-timeline--skin-light m-nav">
+                            <div class="m-list-timeline__items {{^notifications.length}}empty{{/notifications.length}}">
+                                {{#notifications}}
+                                <div class="m-list-timeline__item user-notification-item {{#url}}user-notification-item-clickable{{/url}} {{#isUnread}}user-notification-item-unread{{/isUnread}}" " data-url="{{url}}">
+                                    <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                                    <span class="m-list-timeline__icon {{icon}}"></span>
+                                    <span class="m-list-timeline__text">
+                                        {{text}}
+                                    </span>
+                                    <span class="m-list-timeline__time">
+                                        {{timeAgo}}
+                                        {{#isUnread}}
+                                        <span>
+                                            <a href="javascript:;" data-notification-id="{{userNotificationId}}" class="m-link set-notification-as-read">@L("SetAsRead")</a>
+                                        </span>
+                                        {{/isUnread}}
+                                    </span>
+                                </div>
+                                {{/notifications}}
+                                {{^notifications.length}}
+                                <span class="notification-empty-text">
+                                    @L("ThereIsNoNotification")
+                                </span>
+                                {{/notifications.length}}
+                            </div>
+                            {{#notifications.length}}
+                            <div class="m-nav__separator m-nav__separator--fit"></div>
+                            <div class="external notifications-footer">
+                                <div class="text-center"><a href="@Url.Action("Index", "Notifications", new {area = "AppAreaName"})">@L("SeeAllNotifications")</a></div>
+                            </div>
+                            {{/notifications.length}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>
+
+<!-- begin::Body -->
+<div class="m-grid__item m-grid__item--fluid @(theme.BaseSettings.Layout.LayoutType == "fluid" ? "m-container--fluid":"m-container--responsive m-container--xxl") m-grid m-grid--ver-desktop m-grid--desktop m-container m-page__container m-body">
+    <div class="m-grid__item m-grid__item--fluid m-wrapper">
+        @if (AlertManager.Alerts.Any())
+        {
+            <div id="AbpPageAlerts">
+                @foreach (var alertMessage in AlertManager.Alerts)
+                {
+                    <div class="alert alert-@alertMessage.Type.ToString().ToLower() @(alertMessage.Dismissible ? "alert-dismisable" : "")" role="alert">
+                        <h4 class="alert-heading">
+                            @alertMessage.Title
+                            @if (alertMessage.Dismissible)
+                            {
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            }
+                        </h4>
+                        <p>@alertMessage.Text</p>
+                    </div>
+                }
+            </div>
+        }
+
+        @RenderBody()
+    </div>
+</div>
+<!-- end:: Body -->
+<!-- begin::Footer -->
+@await Component.InvokeAsync(typeof(AppAreaNameFooterViewComponent))
+<!-- end::Footer -->

@@ -1,0 +1,33 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameMenu
+
+@model MenuViewModel
+@{
+    var theme = await GetTheme();
+}
+<nav id="m_ver_menu"
+     aria-label="@L("LeftMenu")"
+     class="m-aside-menu
+            m-aside-menu--skin-@theme.BaseSettings.Menu.AsideSkin
+            m-aside-menu--submenu-skin-@(theme.BaseSettings.Menu.AsideSkin)
+            @(!theme.BaseSettings.Menu.FixedAside && theme.BaseSettings.Menu.SubmenuToggle == "Dropdown" ? " m-aside-menu--dropdown" : "")"
+     data-menu-vertical="true"
+     @(theme.AllowMenuScroll && theme.BaseSettings.Menu.FixedAside ? "m-menu-scrollable=1" : "m-menu-scrollable=0")
+     @(theme.BaseSettings.Menu.SubmenuToggle == "Dropdown" ? "m-menu-dropdown=1" : "m-menu-dropdown=0")
+     m-menu-dropdown-timeout="500">
+    <ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow"
+        role="menubar"
+        aria-label="@L("LeftMenu")">
+        @for (var i = 0; i < Model.Menu.Items.Count; i++)
+        {
+            var menuItem = Model.Menu.Items[i];
+            @await Html.PartialAsync("Components/AppAreaNameMenu/_UserMenuItem", new UserMenuItemViewModel
+            {
+                MenuItem = menuItem,
+                MenuItemIndex = i,
+                RootLevel = true,
+                CurrentPageName = Model.CurrentPageName
+            })
+        }
+    </ul>
+</nav>

@@ -1,0 +1,49 @@
+﻿@model MyCompanyName.AbpZeroTemplate.Configuration.Dto.ThemeSettingsDto
+
+<ul class="nav nav-tabs m-tabs-line" role="tablist">
+    <li class="nav-item m-tabs__item">
+        <a href="#Theme11Header" class="nav-link m-tabs__link active" data-toggle="tab" role="tab">
+            @L("UiCustomization_Header")
+        </a>
+    </li>
+    <li class="nav-item m-tabs__item">
+        <a href="#Theme11Menu" class="nav-link m-tabs__link" data-toggle="tab" role="tab">
+            @L("UiCustomization_Menu")
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div id="Theme11Header" class="tab-pane active">
+        <input type="hidden" name="Theme" value="theme11" />
+
+        <form class="HeaderSettingsForm">
+            <h5 class="margin-bottom-20">@L("UiCustomization_Desktop")</h5>
+            <div class="form-group m-form__group">
+                <label class="m-checkbox col-lg-12">
+                    <input type="checkbox" name="DesktopFixedHeader" value="true" @(Model.Header.DesktopFixedHeader ? "checked=\"checked\"" : "")>
+                    @L("UiCustomization_DesktopFixedHeader")
+                    <span></span>
+                </label>
+            </div>
+            <h5 class="margin-bottom-20">@L("UiCustomization_Mobile")</h5>
+            <div class="form-group m-form__group">
+                <label class="m-checkbox col-lg-12">
+                    <input type="checkbox" name="MobileFixedHeader" value="true" @(Model.Header.MobileFixedHeader ? "checked=\"checked\"" : "")>
+                    @L("UiCustomization_MobileFixedHeader")
+                    <span></span>
+                </label>
+            </div>
+        </form>
+    </div>
+    <div id="Theme11Menu" class="tab-pane">
+        <form class="MenuSettingsForm">
+            <div class="form-group m-form__group">
+                <label class="m-checkbox col-lg-12">
+                    <input type="checkbox" name="FixedAside" value="true" @(Model.Menu.FixedAside ? "checked=\"checked\"" : "")>
+                    @L("UiCustomization_FixedMenu")
+                    <span></span>
+                </label>
+            </div>
+        </form>
+    </div>
+</div>

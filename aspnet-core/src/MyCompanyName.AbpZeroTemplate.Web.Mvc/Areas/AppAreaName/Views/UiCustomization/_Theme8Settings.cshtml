@@ -1,0 +1,50 @@
+﻿@model MyCompanyName.AbpZeroTemplate.Configuration.Dto.ThemeSettingsDto
+
+<ul class="nav nav-tabs m-tabs-line" role="tablist">
+    <li class="nav-item m-tabs__item">
+        <a href="#Theme8Layout" class="nav-link m-tabs__link active" data-toggle="tab" role="tab">
+            @L("UiCustomization_Layout")
+        </a>
+    </li>
+    <li class="nav-item m-tabs__item">
+        <a href="#Theme8Header" class="nav-link m-tabs__link" data-toggle="tab" role="tab">
+            @L("UiCustomization_Header")
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div id="Theme8Layout" class="tab-pane active">
+        <input type="hidden" name="Theme" value="theme8" />
+
+        <form class="LayoutSettingsForm">
+            <div class="form-group m-form__group">
+                <label for="LayoutType">@L("UiCustomization_LayoutType")</label>
+                @Html.DropDownList("LayoutType", new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem {Text = L("UiCustomization_Fluid"), Value = "fluid"},
+                    new SelectListItem {Text = L("UiCustomization_Wide"), Value = "wide"}
+                }, "Value", "Text", Model.Layout.LayoutType), new {@class = "form-control", id = "LayoutType"})
+            </div>
+        </form>
+    </div>
+    <div id="Theme8Header" class="tab-pane">
+        <form class="HeaderSettingsForm">
+            <h5 class="margin-bottom-20">@L("UiCustomization_Desktop")</h5>
+            <div class="form-group m-form__group">
+                <label class="m-checkbox col-lg-12">
+                    <input type="checkbox" name="DesktopFixedHeader" value="true" @(Model.Header.DesktopFixedHeader ? "checked=\"checked\"" : "")>
+                    @L("UiCustomization_DesktopFixedHeader")
+                    <span></span>
+                </label>
+            </div>
+            <h5 class="margin-bottom-20">@L("UiCustomization_Mobile")</h5>
+            <div class="form-group m-form__group">
+                <label class="m-checkbox col-lg-12">
+                    <input type="checkbox" name="MobileFixedHeader" value="true" @(Model.Header.MobileFixedHeader ? "checked=\"checked\"" : "")>
+                    @L("UiCustomization_MobileFixedHeader")
+                    <span></span>
+                </label>
+            </div>
+        </form>
+    </div>
+</div>

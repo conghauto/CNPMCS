@@ -1,0 +1,24 @@
+<div [@routerTransition]>
+    <hr class="border-green" />
+    <div class="form-actions">
+        <div class="form-group row">
+            <label class="col-sm-4 control-label">{{l("Item")}}</label>
+            <div class="col-sm-8 text-right">
+                <p class="form-control-static text-bold">
+                    {{description}}
+                </p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 control-label">{{l("Price")}}</label>
+            <div class="col-sm-8 text-right">
+                <p class="form-control-static text-bold" id="totalPrice">
+                    ${{amount | number : '1.2-2'}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button id="stripe-checkout" class="stripe-checkout-button btn btn-primary btn-block">{{'Purchase' | localize}}</button>
+    <div [busyIf]="stripeIsLoading" *ngIf="stripeIsLoading"></div>
+</div>

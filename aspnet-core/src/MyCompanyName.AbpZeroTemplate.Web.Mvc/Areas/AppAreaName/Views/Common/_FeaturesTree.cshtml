@@ -1,0 +1,5 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Common
+@model IFeatureEditViewModel
+<div class="feature-tree">
+    @await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/_FeaturesTreeItem.cshtml", new FeatureTreeItemModel(Model, null))
+</div>

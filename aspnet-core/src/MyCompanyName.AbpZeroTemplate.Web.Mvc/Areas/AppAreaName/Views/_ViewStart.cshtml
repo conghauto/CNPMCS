@@ -1,0 +1,5 @@
+﻿@using MyCompanyName.AbpZeroTemplate.UiCustomization.Dto
+@{
+    UiCustomizationSettingsDto theme = await GetTheme();
+    Layout = "~/Areas/AppAreaName/Views/Layout/" + theme.BaseSettings.Theme + "/_Layout.cshtml";
+}

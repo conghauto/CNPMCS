@@ -1,0 +1,18 @@
+<div [@routerTransition]>
+    <hr class="border-green" />
+    <div class="form-actions">
+        <div class="form-group row">
+            <label class="col-sm-4 control-label">{{l("Item")}}</label>
+            <div class="col-sm-8 text-right">
+                <p class="form-control-static text-bold">
+                    {{description}}
+                </p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-12 control-label">{{"RecurringSubscriptionUpgradeNote" | localize}}</label>
+        </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" (click)="upgradeSubscription()">{{'Purchase' | localize}}</button>
+</div>

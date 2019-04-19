@@ -1,0 +1,48 @@
+﻿@using Abp.MultiTenancy
+@using Abp.Runtime.Session
+@using MyCompanyName.AbpZeroTemplate.Authorization
+@using MyCompanyName.AbpZeroTemplate.Editions
+@using MyCompanyName.AbpZeroTemplate.UiCustomization
+@{
+    Layout = null;
+}
+@if (AbpSession.MultiTenancySide != MultiTenancySides.Host)
+{
+    if (IsGranted(AppPermissions.Pages_Administration_Tenant_SubscriptionManagement) &&
+        (Model.LoginInformations.Tenant.IsInTrialPeriod || Model.LoginInformations.Tenant.SubscriptionIsExpiringSoon(Model.SubscriptionExpireNootifyDayCount)))
+    {
+        <style>
+            .m-header--fixed .m-body {
+                margin-top: 30px !important;
+            }
+
+            @@media (min-width: 1024px) {
+                .m-header--fixed .m-body, .m-aside-left--fixed.m-header--fixed .m-aside-left, .m-aside-left--fixed.m-header--static .m-aside-left {
+                    margin-top: 30px !important;
+                }
+            }
+        </style>
+        <div class="alert subscription-info">
+            @if (Model.LoginInformations.Tenant.IsInTrialPeriod && !Model.LoginInformations.Tenant.SubscriptionIsExpiringSoon(Model.SubscriptionExpireNootifyDayCount))
+            {
+                @Html.Raw(L("TrialSubscriptionNotification",
+                         "<strong>" + Model.LoginInformations.Tenant.Edition.DisplayName + "</strong>",
+                         "<a href='" + Url.Action("Buy", "Payment", new { area = "", editionId = Model.LoginInformations.Tenant.Edition.Id, editionPaymentType = EditionPaymentType.BuyNow }) + "'>" + L("ClickHere") + "</a>")
+                         )
+            }
+            @if (Model.LoginInformations.Tenant.SubscriptionIsExpiringSoon(Model.SubscriptionExpireNootifyDayCount))
+            {
+                <a href="@Url.Action("Index", "SubscriptionManagement", new {area = "AppAreaName"})">
+                    @if (Model.LoginInformations.Tenant.IsInTrialPeriod)
+                    {
+                        <span><i class="fa fa-exclamation-circle"></i> @L("TrialExpireNotification", Model.LoginInformations.Tenant.GetSubscriptionExpiringDayCount())</span>
+                    }
+                    else
+                    {
+                        <span><i class="fa fa-exclamation-circle"></i> @L("SubscriptionExpireNotification", Model.LoginInformations.Tenant.GetSubscriptionExpiringDayCount())</span>
+                    }
+                </a>
+            }
+        </div>
+    }
+}

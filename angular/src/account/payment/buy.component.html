@@ -1,0 +1,46 @@
+<div [@routerTransition]>
+    <div class="m-login__head">
+        <h3 class="m-login__title">
+            {{"PaymentInfo" | localize}}
+        </h3>
+    </div>
+
+    <form class="buy-edition-form" method="post">
+
+        <div class="text-center m--margin-bottom-20">({{"Edition" | localize}}: {{edition.displayName}})</div>
+
+        <div *ngIf="edition.monthlyPrice" class="form-group">
+            <label class="m-radio">
+                <input class="form-control" type="radio" name="PaymentPeriodType"
+                       checked
+                       [value]="paymentPeriodType.Monthly"
+                       (change)="onPaymentPeriodChangeChange(paymentPeriodType.Monthly)" />{{"MonthlyPrice" | localize}}: ${{edition.monthlyPrice | number : '1.2-2'}}
+                <span></span>
+            </label>
+        </div>
+
+        <div *ngIf="edition.annualPrice" class="form-group">
+            <label class="m-radio">
+                <input class="form-control" type="radio" name="PaymentPeriodType"
+                       [value]="paymentPeriodType.Annual"
+                       (change)="onPaymentPeriodChangeChange(paymentPeriodType.Annual)" />{{"AnnualPrice" | localize}}: ${{edition.annualPrice | number : '1.2-2'}}
+                <span></span>
+            </label>
+        </div>
+
+        <hr />
+
+        <div *ngIf="supportsRecurringPayments" class="form-group">
+            <label class="m-checkbox margin-bottom-0">
+                <input class="form-control" type="checkbox" name="RecurringPaymentEnabled"
+                       [(ngModel)]="recurringPaymentEnabled" /> {{"AutomaticallyBillMyAccount" | localize}}
+                <span></span>
+            </label>
+        </div>
+
+        <div *ngFor="let paymentGateway of paymentGateways" class="form-group">
+            <button *ngIf="paymentGateway.supportsRecurringPayments || !recurringPaymentEnabled" (click)="checkout(paymentGateway.gatewayType)" class="btn btn-success btn-block">{{"CheckoutWith" + getPaymentGatewayType(paymentGateway.gatewayType) | localize}}</button>
+        </div>
+
+    </form>
+</div>

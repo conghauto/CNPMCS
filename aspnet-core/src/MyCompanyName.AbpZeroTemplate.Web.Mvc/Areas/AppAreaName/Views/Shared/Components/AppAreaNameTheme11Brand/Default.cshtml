@@ -1,0 +1,57 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameLogo
+@model HeaderViewModel
+@{
+    Layout = null;
+    var theme = await GetTheme();
+}
+<div class="m-stack__item m-brand m-brand--skin-light d-print-none">
+    <div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
+        <div class="m-stack__item m-stack__item--middle m-brand__logo">
+            <a href="@Url.Action("Index", "Home", new {area = string.Empty})" target="_blank" class="m-brand__logo-wrapper">
+                @await Component.InvokeAsync(typeof(AppAreaNameLogoViewComponent), new { LogoSkin = "dark" })
+            </a>
+        </div>
+        <div class="m-stack__item m-stack__item--middle m-brand__tools">
+            <!-- BEGIN: Left Aside Minimize Toggle -->
+            @if (theme.IsLeftMenuUsed)
+            {
+                if (theme.BaseSettings.Menu.AllowAsideMinimizing)
+                {
+                    <a href="javascript:;" id="m_aside_left_minimize_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block">
+                        <span></span>
+                    </a>
+                }
+                else if (theme.BaseSettings.Menu.AllowAsideHiding)
+                {
+                    <a href="javascript:;" id="m_aside_left_hide_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-desktop-inline-block">
+                        <span></span>
+                    </a>
+                }
+            }
+
+            <!-- END -->
+            <!-- BEGIN: Responsive Aside Left Menu Toggler -->
+            @if (theme.IsLeftMenuUsed)
+            {
+                <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                    <span></span>
+                </a>
+            }
+            <!-- END -->
+            <!-- begin::Responsive Header Menu Toggler-->
+            @if (theme.IsTopMenuUsed || theme.IsTabMenuUsed)
+            {
+                <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler m--visible-tablet-and-mobile-inline-block">
+                    <span></span>
+                </a>
+            }
+            <!-- end::Responsive Header Menu Toggler-->
+            <!-- BEGIN: Topbar Toggler -->
+            <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                <i class="flaticon-more" aria-label="@L("Toggle")"></i>
+            </a>
+            <!-- BEGIN: Topbar Toggler -->
+        </div>
+    </div>
+</div>

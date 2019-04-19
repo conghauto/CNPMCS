@@ -1,0 +1,281 @@
+﻿@using Abp.MultiTenancy
+@using Abp.Timing
+@using MyCompanyName.AbpZeroTemplate.Features
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout
+@using Abp.Extensions;
+@using MyCompanyName.AbpZeroTemplate.UiCustomization
+@using MyCompanyName.AbpZeroTemplate.UiCustomization.Dto
+@model HeaderViewModel
+@{
+    Layout = null;
+    var isChatEnabled = (AbpSession.MultiTenancySide == MultiTenancySides.Host || IsFeatureEnabled(AppFeatures.ChatFeature));
+    UiCustomizationSettingsDto theme = await GetTheme();
+}
+
+<div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+    <nav class="m-stack__item m-topbar__nav-wrapper"
+         aria-label="@L("TopMenu")">
+        <ul class="m-topbar__nav m-nav m-nav--inline"
+            aria-label="@L("TopMenu")"
+            role="menubar">
+            @if (Model.Languages.Count > 1)
+            {
+                <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light m-list-search m-list-search--skin-light dropdown-language"
+                    aria-haspopup="true">
+                    <a href="javascript:;" class="m-nav__link m-dropdown__toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true"
+                       role="menuitem"
+                       aria-haspopup="true"
+                       aria-expanded="false"
+                       tabindex="-1">
+                        <span class="m-nav__link-text">
+                            <i class="@Model.CurrentLanguage.Icon" aria-label="@Model.CurrentLanguage.Icon"></i>
+                            <span class="m-menu__link-text langname">
+                                @Model.CurrentLanguage.DisplayName
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu"
+                        aria-label="@L("Languages")"
+                        role="menu">
+                        @foreach (var language in Model.Languages.Where(language => language.Name != Model.CurrentLanguage.Name))
+                        {
+                            <li role="none">
+                                <a href="~/AbpLocalization/ChangeCulture?cultureName=@language.Name&returnUrl=@ApplicationPath@Context.Request.Path.Value.RemovePreFix("/")"
+                                   role="menuitem"
+                                   aria-haspopup="true"
+                                   aria-expanded="false"
+                                   tabindex="-1">
+                                    <i class="@language.Icon"></i> @language.DisplayName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+            <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1" id="header_notification_bar">
+
+            </li>
+            <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+                <a href="#" class="m-nav__link m-dropdown__toggle"
+                   role="menuitem"
+                   aria-haspopup="true"
+                   aria-expanded="false"
+                   tabindex="0">
+                    <span class="m-topbar__username">
+                        @if (Model.IsImpersonatedLogin)
+                        {
+                            <i class="fa fa-reply m--font-danger"></i>
+                        }
+                        @Html.Raw(Model.GetShownLoginName())
+                    </span>
+                    <span class="m-topbar__userpic">
+                        <img alt="" class="header-profile-picture m--img-rounded m--marginless m--img-centered" src="@Url.Action("GetProfilePicture", "Profile", new {area = string.Empty})?t=@Clock.Now.Ticks.ToString()" />
+                    </span>
+                </a>
+                <div class="m-dropdown__wrapper">
+                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                    <div class="m-dropdown__inner">
+                        <div class="m-dropdown__header m--align-center" style="background: url(@(ApplicationPath)metronic/dist/html/@theme.BaseSettings.Layout.ThemeColor/assets/demo/@theme.BaseSettings.Layout.ThemeColor/media/img/misc/user_profile_bg.jpg); background-size: cover;">
+                            <div class="m-card-user m-card-user--skin-dark">
+                                <div class="m-card-user__pic">
+                                    <img alt="" class="header-profile-picture m--img-rounded m--marginless m--img-centered" src="@Url.Action("GetProfilePicture", "Profile", new {area = string.Empty})?t=@Clock.Now.Ticks.ToString()" />
+                                </div>
+                                <div class="m-card-user__details">
+                                    <span class="m-card-user__name m--font-weight-500">
+                                        @Html.Raw(Model.GetShownLoginName())
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-dropdown__body">
+                            <nav class="m-dropdown__content" aria-label="@L("UserAccount")">
+                                <ul class="m-nav m-nav--skin-light"
+                                    aria-label="@L("UserAccount")"
+                                    role="menu">
+                                    @if (Model.IsImpersonatedLogin)
+                                    {
+                                        <li class="m-nav__item" role="none">
+                                            <a href="#" class="m-nav__link"
+                                               role="menuitem"
+                                               aria-haspopup="true"
+                                               aria-expanded="false"
+                                               tabindex="-1">
+                                                <i class="m-nav__link-icon fa fa-reply m--font-danger"></i>
+                                                <span class="m-nav__link-title">
+                                                    <span class="m-nav__link-wrap">
+                                                        <span id="UserProfileBackToMyAccountButton" class="m-nav__link-text">
+                                                            @L("BackToMyAccount")
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="m-nav__separator m-nav__separator--fit"></li>
+                                    }
+                                    <li class="m-nav__item" role="none">
+                                        <a href="#" class="m-nav__link"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">
+                                            <i class="m-nav__link-icon flaticon-user-settings"></i>
+                                            <span class="m-nav__link-title">
+                                                <span class="m-nav__link-wrap">
+                                                    <span id="ManageLinkedAccountsLink" class="m-nav__link-text">
+                                                        @L("ManageLinkedAccounts")
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        <ul id="RecentlyUsedLinkedUsers" class="m-nav linked-accounts"
+                                            aria-label="@L("LinkedAccounts")"
+                                            role="menu"></ul>
+                                    </li>
+                                    <li class="m-nav__separator m-nav__separator--fit" role="none"></li>
+                                    <li class="m-nav__item" role="none">
+                                        <a href="#" class="m-nav__link"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">
+                                            <i class="m-nav__link-icon flaticon-more-v6"></i>
+                                            <span class="m-nav__link-title">
+                                                <span class="m-nav__link-wrap">
+                                                    <span id="UserProfileChangePasswordLink" class="m-nav__link-text">
+                                                        @L("ChangePassword")
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item" role="none">
+                                        <a href="#" class="m-nav__link"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">
+                                            <i class="m-nav__link-icon flaticon-list"></i>
+                                            <span class="m-nav__link-title">
+                                                <span class="m-nav__link-wrap">
+                                                    <span id="ShowLoginAttemptsLink" class="m-nav__link-text">
+                                                        @L("LoginAttempts")
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item" role="none">
+                                        <a href="#" class="m-nav__link"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">
+                                            <i class="m-nav__link-icon flaticon-profile-1"></i>
+                                            <span class="m-nav__link-title">
+                                                <span class="m-nav__link-wrap">
+                                                    <span id="UserProfileChangePictureLink" class="m-nav__link-text">
+                                                        @L("ChangeProfilePicture")
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item" role="none">
+                                        <a href="#" class="m-nav__link"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">
+                                            <i class="m-nav__link-icon flaticon-cogwheel"></i>
+                                            <span class="m-nav__link-title">
+                                                <span class="m-nav__link-wrap">
+                                                    <span id="UserProfileMySettingsLink" class="m-nav__link-text">
+                                                        @L("MySettings")
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    @if (!Model.HasUiCustomizationPagePermission)
+                                    {
+                                        <li class="m-nav__item" role="none">
+                                            <a href="@Url.Action("Index", "UiCustomization")" class="m-nav__link"
+                                               role="menuitem"
+                                               aria-haspopup="true"
+                                               aria-expanded="false"
+                                               tabindex="-1">
+                                                <i class="m-nav__link-icon flaticon-medical"></i>
+                                                <span class="m-nav__link-title">
+                                                    <span class="m-nav__link-wrap">
+                                                        <span class="m-nav__link-text">
+                                                            @L("VisualSettings")
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    <li class="m-nav__item" role="none">
+                                        <a href="#" class="m-nav__link"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">
+                                            <i class="m-nav__link-icon flaticon-download"></i>
+                                            <span class="m-nav__link-title">
+                                                <span class="m-nav__link-wrap">
+                                                    <span id="UserDownloadCollectedDataLink" class="m-nav__link-text">
+                                                        @L("DownloadCollectedData")
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__separator m-nav__separator--fit" role="none"></li>
+                                    <li class="m-nav__item" role="none">
+                                        <a href="@Url.Action("Logout", "Account", new {area = string.Empty})" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder"
+                                           role="menuitem"
+                                           aria-haspopup="true"
+                                           aria-expanded="false"
+                                           tabindex="-1">@L("Logout")</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            @if (isChatEnabled)
+            {
+                <li id="chat_is_connecting_icon" class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width">
+                    <a href="javascript:;" class="m-nav__link"
+                       role="menuitem"
+                       aria-haspopup="true"
+                       aria-expanded="false"
+                       tabindex="-1">
+                        <span class="m-nav__link-icon">
+                            <span class="m-nav__link-icon-wrapper">
+                                <img src="@(ApplicationPath)Common/Images/loading.gif" style="width: 23px;" tooltip="@L("ChatIsConnecting")" placement="left" />
+                            </span>
+                        </span>
+                    </a>
+                </li>
+                <li id="m_quick_sidebar_toggle" class="m-nav__item d-none">
+                    <a href="#" class="m-nav__link m-dropdown__toggle"
+                       role="menuitem"
+                       aria-haspopup="true"
+                       aria-expanded="false"
+                       tabindex="-1">
+                        <span class="m-nav__link-icon">
+                            <span class="m-nav__link-icon-wrapper">
+                                <i class="flaticon-chat-2"></i>
+                            </span>
+                        </span>
+                        <span class="m-badge m-badge--danger d-none" id="UnreadChatMessageCount">0</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

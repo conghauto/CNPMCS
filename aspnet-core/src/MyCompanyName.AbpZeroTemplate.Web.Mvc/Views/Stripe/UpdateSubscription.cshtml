@@ -1,0 +1,28 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Resources
+@model MyCompanyName.AbpZeroTemplate.Web.Models.Stripe.StripePurchaseViewModel
+@inject IWebResourceManager WebResourceManager
+@{
+    Layout = "~/Views/Account/_Layout.cshtml";
+    ViewBag.DisableTenantChange = true;
+}
+
+<hr class="border-green" />
+<div class="form-actions">
+    <div class="form-group row">
+        <label class="col-sm-4 control-label">@L("Item")</label>
+        <div class="col-sm-8 text-right">
+            <p class="form-control-static text-bold">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-12 control-label">@L("RecurringSubscriptionUpgradeNote")</label>
+    </div>
+</div>
+
+<form id="stripeCheckoutForm" method="post" asp-action="UpdateSubscription" asp-controller="Stripe" class="register-form">
+    <input type="hidden" name="paymentId" value="@Model.PaymentId" />
+
+    <button type="submit" class="stripe-checkout-button btn btn-primary btn-block">@L("Upgrade")</button>
+</form>

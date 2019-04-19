@@ -1,0 +1,166 @@
+﻿[
+  {
+    "outputFile": "src/assets/primeng/datatable/css/primeng.datatable.css",
+    "inputFile": "src/assets/primeng/datatable/css/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/primeng/file-upload/css/primeng.file-upload.css",
+    "inputFile": "src/assets/primeng/file-upload/css/primeng.file-upload.less"
+  },
+  {
+    "outputFile": "src/assets/primeng/autocomplete/css/primeng.autocomplete.css",
+    "inputFile": "src/assets/primeng/autocomplete/css/primeng.autocomplete.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/blue/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/blue/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/blue/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/blue/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/default/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/default/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/green/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/green/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/pink/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/pink/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/yellow/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/yellow/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/green/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/green/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/default/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/default/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/pink/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/pink/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/yellow/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/yellow/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/blue/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/blue/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/default/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/default/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/green/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/green/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/pink/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/pink/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/yellow/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/yellow/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme8/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme8/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme2/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme2/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme2/metronic-customize-top-menu.css",
+    "inputFile": "src/assets/common/styles/themes/theme2/metronic-customize-top-menu.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme2/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/theme2/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme2/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/theme2/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme11/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme11/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme11/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/theme11/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme11/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/theme11/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme3/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme3/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme3/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/theme3/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme3/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/theme3/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme7/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme7/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme7/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/theme7/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme7/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/theme7/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme10/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme10/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme10/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/theme10/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme10/metronic-customize-top-menu.css",
+    "inputFile": "src/assets/common/styles/themes/theme10/metronic-customize-top-menu.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme10/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/theme10/primeng.datatable.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme6/metronic-customize.css",
+    "inputFile": "src/assets/common/styles/themes/theme6/metronic-customize.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme6/metronic-customize-angular.css",
+    "inputFile": "src/assets/common/styles/themes/theme6/metronic-customize-angular.less"
+  },
+  {
+    "outputFile": "src/assets/common/styles/themes/theme6/primeng.datatable.css",
+    "inputFile": "src/assets/common/styles/themes/theme6/primeng.datatable.less"
+  }
+]

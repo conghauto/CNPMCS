@@ -1,0 +1,148 @@
+﻿@using Abp.Collections.Extensions
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameMenu
+@model UserMenuItemViewModel
+
+@if (Model.RootLevel && Model.IsTabMenuUsed || !Model.MenuItem.Items.IsNullOrEmpty())
+{
+    <li class="m-menu__item @GetMenuItemClass(Model) @GetActiveLinkClass(Model)" @(Model.IsTabMenuUsed && Model.RootLevel ? "m-menu-submenu-toggle=tab" : "m-menu-submenu-toggle=click") aria-haspopup="true">
+        <a href="#" class="m-menu__link m-menu__toggle"
+           role="menuitem"
+           aria-haspopup="true"
+           aria-expanded="false"
+           tabindex="@(Model.MenuItemIndex == 0 ? "0" : "-1")">
+            <i class="m-menu__link-icon @Model.MenuItem.Icon"></i>
+            <span class="m-menu__item-here"></span>
+            <span class="m-menu__link-text">
+                @Model.MenuItem.DisplayName
+            </span>
+            <i class="m-menu__hor-arrow la @GetAngleItemClass(Model)"></i>
+        </a>
+        <div class="@(GetSubmenuCssClasses(Model))" aria-label="@Model.MenuItem.DisplayName">
+            <span class="m-menu__arrow @(Model.IsTabMenuUsed ? "m-menu__arrow--adjust": "")"></span>
+            <ul class="m-menu__subnav" role="menu" aria-label="@Model.MenuItem.DisplayName">
+                @if (Model.IsTabMenuUsed && Model.RootLevel && Model.MenuItem.Items.IsNullOrEmpty())
+                {
+                    @await Html.PartialAsync("Components/AppAreaNameMenu/_TopUserMenuItem", new UserMenuItemViewModel
+                    {
+                        MenuItem = Model.MenuItem,
+                        MenuItemIndex = 0,
+                        ItemDepth = Model.ItemDepth + 1,
+                        CurrentPageName = Model.CurrentPageName,
+                        RootLevel = false,
+                        IsTabMenuUsed = Model.IsTabMenuUsed
+                    })
+                }
+
+                @for (var i = 0; i < Model.MenuItem.Items.Count; i++)
+                {
+                    var childMenuItem = Model.MenuItem.Items[i];
+                    if (!childMenuItem.IsVisible)
+                    {
+                        continue;
+                    }
+
+                    @await Html.PartialAsync("Components/AppAreaNameMenu/_TopUserMenuItem", new UserMenuItemViewModel
+                    {
+                        MenuItem = childMenuItem,
+                        MenuItemIndex = i,
+                        ItemDepth = Model.ItemDepth + 1,
+                        CurrentPageName = Model.CurrentPageName,
+                        RootLevel = false,
+                        IsTabMenuUsed = Model.IsTabMenuUsed
+                    })
+                }
+            </ul>
+        </div>
+    </li>
+}
+else
+{
+    <li class="m-menu__item @GetActiveLinkClass(Model)" aria-haspopup="true">
+        <a href="@Model.MenuItem.CalculateUrl(ApplicationPath)" class="m-menu__link "
+           role="menuitem"
+           aria-haspopup="true"
+           aria-expanded="false"
+           tabindex="@(Model.MenuItemIndex==0 ? "0" : "-1")">
+            <i class="m-menu__link-icon @Model.MenuItem.Icon"></i>
+            <span class="m-menu__item-here"></span>
+            <span class="m-menu__link-text">
+                @Model.MenuItem.DisplayName
+            </span>
+        </a>
+    </li>
+}
+
+@functions
+{
+
+    public static string GetActiveLinkClass(UserMenuItemViewModel model)
+    {
+        var activeClass = " ";
+        if (!model.MenuItem.IsMenuActive(model.CurrentPageName))
+        {
+            return activeClass;
+        }
+
+        activeClass += "m-menu__item--active ";
+        if (model.IsTabMenuUsed && model.RootLevel)
+        {
+            activeClass += "m-menu__item--active-tab ";
+        }
+
+        return activeClass;
+    }
+
+    public static string GetMenuItemClass(UserMenuItemViewModel model)
+    {
+        var menuItemClass = " ";
+        if (model.RootLevel || !model.MenuItem.Items.IsNullOrEmpty())
+        {
+            menuItemClass += "m-menu__item--submenu ";
+        }
+
+        if (model.IsTabMenuUsed && model.RootLevel)
+        {
+            menuItemClass += "m-menu__item--tabs ";
+        }
+
+        if ((model.IsTabMenuUsed && !model.RootLevel && model.MenuItem.Items.Count > 0) || (!model.IsTabMenuUsed && model.MenuItem.Items.Count > 0))
+        {
+            menuItemClass += "m-menu__item--rel ";
+        }
+
+        return menuItemClass;
+    }
+
+    public static string GetAngleItemClass(UserMenuItemViewModel model)
+    {
+        if (model.IsTabMenuUsed && model.ItemDepth >= 2)
+        {
+            return "la-angle-right";
+        }
+
+        if (!model.IsTabMenuUsed && !model.RootLevel)
+        {
+            return "la-angle-right";
+        }
+
+        return "la-angle-down";
+    }
+
+    public static string GetSubmenuCssClasses(UserMenuItemViewModel model)
+    {
+        var cssClasses = "m-menu__submenu m-menu__submenu--classic";
+
+        if (model.IsTabMenuUsed)
+        {
+            cssClasses += " m-menu__submenu--tabs";
+            cssClasses += " m-menu__submenu--" + (model.ItemDepth >= 2 ? "right" : "left");
+        }
+        else
+        {
+            cssClasses += " m-menu__submenu--" + (model.ItemDepth >= 1 ? "right" : "left");
+        }
+
+        return cssClasses;
+    }
+
+}

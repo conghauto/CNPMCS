@@ -1,0 +1,24 @@
+﻿@using MyCompanyName.AbpZeroTemplate
+@using MyCompanyName.AbpZeroTemplate.UiCustomization
+@using MyCompanyName.AbpZeroTemplate.UiCustomization.Dto
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout
+@model FooterViewModel
+@{
+    Layout = null;
+    UiCustomizationSettingsDto theme = await GetTheme();
+}
+<footer class="m-grid__item m-footer ">
+    <div class="m-container @(theme.BaseSettings.Layout.LayoutType == "fluid" ? "m-container--fluid":"m-container--responsive m-container--xxl") m-container--full-height m-page__container">
+        <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
+            <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
+                <span class="m-footer__copyright">
+                    @Model.GetProductNameWithEdition() <br />
+                    v@(AppVersionHelper.Version) [@AppVersionHelper.ReleaseDate.ToString("yyyyMMdd")]
+                </span>
+            </div>
+            <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
+
+            </div>
+        </div>
+    </div>
+</footer>

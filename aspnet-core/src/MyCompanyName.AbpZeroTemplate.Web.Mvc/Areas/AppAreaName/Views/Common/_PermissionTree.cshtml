@@ -1,0 +1,9 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Common
+@model IPermissionsEditViewModel
+
+<div class="form-group">
+    <input id="PermissionTreeFilter" type="text" class="form-control" placeholder="@L("SearchWithThreeDot")">
+</div>
+<div class="permission-tree">
+    @await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/_PermissionTreeItem.cshtml", new PermissionTreeItemModel(Model, null))
+</div>

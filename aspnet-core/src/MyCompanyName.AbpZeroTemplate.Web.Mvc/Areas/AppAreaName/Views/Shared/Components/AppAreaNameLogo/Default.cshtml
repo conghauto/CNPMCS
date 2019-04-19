@@ -1,0 +1,8 @@
+﻿@using IdentityServer4.Extensions
+@model MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout.LogoViewModel
+@{
+    Layout = null;
+    var theme = await GetTheme();
+}
+
+<img id="AppLogo" src="@Model.GetLogoUrl(ApplicationPath, theme.IsTopMenuUsed || theme.IsTabMenuUsed ? theme.BaseSettings.Header.HeaderSkin: theme.BaseSettings.Menu.AsideSkin)" alt="logo" height="38" />

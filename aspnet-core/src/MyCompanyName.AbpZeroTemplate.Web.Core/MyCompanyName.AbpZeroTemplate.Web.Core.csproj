@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props"></Import>
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netcoreapp2.2</TargetFrameworks>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>MyCompanyName.AbpZeroTemplate.Web.Core</AssemblyName>
+    <PackageId>MyCompanyName.AbpZeroTemplate.Web.Core</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>MyCompanyName.AbpZeroTemplate.Web</RootNamespace>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\MyCompanyName.AbpZeroTemplate.Application\MyCompanyName.AbpZeroTemplate.Application.csproj" />
+    <ProjectReference Include="..\MyCompanyName.AbpZeroTemplate.EntityFrameworkCore\MyCompanyName.AbpZeroTemplate.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp.AspNetCore.SignalR" Version="4.2.0" />
+    <PackageReference Include="Abp.AspNetZeroCore.Web" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="2.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.6.22" />
+    <PackageReference Include="PaulMiami.AspNetCore.Mvc.Recaptcha" Version="1.2.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp.ZeroCore.IdentityServer4" Version="4.2.0" />
+    <PackageReference Include="Abp.AspNetCore" Version="4.2.0" />
+    <PackageReference Include="Abp.HangFire.AspNetCore" Version="4.2.0" />
+    <PackageReference Include="Abp.RedisCache" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <PackageReference Include="Abp.Owin" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
+    <DefineConstants>NET461</DefineConstants>
+  </PropertyGroup>
+
+</Project>

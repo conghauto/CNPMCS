@@ -1,0 +1,9 @@
+﻿@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Common
+@model IOrganizationUnitsEditViewModel
+
+<div class="form-group">
+    <input id="OrganizationTreeFilter" type="text" class="form-control" placeholder="@L("SearchWithThreeDot")">
+</div>
+<div class="organization-tree">
+    @await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/_OrganizationUnitTreeItem.cshtml", new OrganizationUnitTreeItemModel(Model, null))
+</div>

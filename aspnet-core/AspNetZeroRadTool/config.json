@@ -1,0 +1,10 @@
+{
+  "CompanyName": "MyCompanyName",
+  "ProjectName": "AbpZeroTemplate",
+  "ProjectType": "ProjectType",
+  "ProjectVersion":"ProjectVersion",
+  "ApplicationAreaName": "AppAreaName",
+  "AngularSrcPath": "\\..\\..\\angular\\src\\",
+  "CoreSrcPath": "\\..\\src\\",
+  "LicenseCode": "LicenseCodePlaceHolderToReplace"
+}

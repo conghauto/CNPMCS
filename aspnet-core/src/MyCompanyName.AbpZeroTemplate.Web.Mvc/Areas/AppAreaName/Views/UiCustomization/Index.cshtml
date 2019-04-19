@@ -1,0 +1,125 @@
+﻿@using Abp.Extensions
+@using MyCompanyName.AbpZeroTemplate
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Startup
+@model MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.UiCustomization.UiCustomizationViewModel
+@{
+    ViewBag.CurrentPageName = AppAreaNamePageNames.Common.UiCustomization;
+}
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/AppAreaName/Views/UiCustomization/Index.css" asp-append-version="true" />
+}
+@section Scripts
+{
+    <script abp-src="/view-resources/Areas/AppAreaName/Views/UiCustomization/Index.js" asp-append-version="true"></script>
+}
+
+<div class="m-subheader ">
+    <div class="row align-items-center">
+        <div class="mr-auto col-sm-12 col-md-6">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                <span>@L("VisualSettings")</span>
+            </h3>
+            <span class="m-section__sub">
+                @L("UiCustomizationHeaderInfo")
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <div id="metronicThemes" class="m--margin-bottom-20">
+                <ul class="nav nav-tabs m-tabs-line m-tabs-line--2x m-tabs-line--primary" role="tablist">
+                    <li class="nav-item m-tabs__item">
+                        <a href="#default" class="nav-link m-tabs__link @(Model.Theme == AppConsts.ThemeDefault ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/default.png" width="150" />
+                            <span class="theme-name">@L(AppConsts.ThemeDefault.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme2" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme2 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme2.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme2.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme3" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme3 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme3.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme3.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme6" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme6 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme6.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme6.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme7" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme7 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme7.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme7.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme8" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme8 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme8.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme8.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme10" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme10 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme10.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme10.ToPascalCase())</span>
+                        </a>
+                    </li>
+                    <li class="nav-item m-tabs__item">
+                        <a href="#theme11" class="nav-link m-tabs__link @(Model.Theme == AppConsts.Theme11 ? "active" : "")" data-toggle="tab" role="tab">
+                            <img src="@(ApplicationPath)Common/Images/metronic-themes/theme11.png" width="150" />
+                            <span class="theme-name">@L("Theme_" + AppConsts.Theme11.ToPascalCase())</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="default" class="tab-pane theme-selection @(Model.Theme == AppConsts.ThemeDefault ? "active show" : "")">
+                        @await Html.PartialAsync("_DefaultSettings", Model.GetThemeSettings(AppConsts.ThemeDefault))
+                    </div>
+                    <div id="theme2" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme2 ? "active show" : "")">
+                        @await Html.PartialAsync("_Theme2Settings", Model.GetThemeSettings(AppConsts.Theme2))
+                    </div>
+                    <div id="theme3" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme3 ? "active show" : "")">
+                        @await Html.PartialAsync("_Theme3Settings", Model.GetThemeSettings(AppConsts.Theme3))
+                    </div>
+                    <div id="theme6" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme6 ? " active show" : "" )">
+                        @await Html.PartialAsync("_Theme6Settings", Model.GetThemeSettings(AppConsts.Theme6))
+                    </div>
+                    <div id="theme7" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme7 ? "active show" : "")">
+                        @await Html.PartialAsync("_Theme7Settings", Model.GetThemeSettings(AppConsts.Theme7))
+                    </div>
+                    <div id="theme8" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme8 ? "active show" : "")">
+                        @await Html.PartialAsync("_Theme8Settings", Model.GetThemeSettings(AppConsts.Theme8))
+                    </div>
+                    <div id="theme10" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme10 ? "active show" : "")">
+                        @await Html.PartialAsync("_Theme10Settings", Model.GetThemeSettings(AppConsts.Theme10))
+                    </div>
+                    <div id="theme11" class="tab-pane theme-selection @(Model.Theme == AppConsts.Theme11 ? "active show" : "")">
+                        @await Html.PartialAsync("_Theme11Settings", Model.GetThemeSettings(AppConsts.Theme11))
+                    </div>
+                </div>
+
+                <div class="m--margin-top-40">
+                    @if (Model.HasUiCustomizationPagePermission)
+                    {
+                        <button id="SaveDefaultSettingsButton" class="btn btn-primary"><i class="fa fa-save"></i> @L("SaveAsSystemDefault")</button>
+                    }
+                    else
+                    {
+                        <button id="SaveSettingsButton" class="btn btn-primary"><i class="fa fa-save"></i> @L("Save")</button>
+                        <button id="UseSystemDefaultSettings" class="btn btn-metal"> @L("UseSystemDefaults")</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

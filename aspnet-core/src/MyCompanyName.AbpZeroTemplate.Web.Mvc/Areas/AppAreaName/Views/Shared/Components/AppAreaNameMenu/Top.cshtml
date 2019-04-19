@@ -1,0 +1,40 @@
+﻿@using MyCompanyName.AbpZeroTemplate.UiCustomization
+@using MyCompanyName.AbpZeroTemplate.UiCustomization.Dto
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Models.Layout
+@using MyCompanyName.AbpZeroTemplate.Web.Areas.AppAreaName.Views.Shared.Components.AppAreaNameMenu
+@model MenuViewModel
+@{
+    Layout = null;
+    UiCustomizationSettingsDto theme = await GetTheme();
+}
+
+<div class="m-container @(theme.BaseSettings.Layout.LayoutType == "fluid" ? "m-container--fluid":"m-container--responsive m-container--xxl") m-container--full-height m-page__container">
+    <div class="m-stack m-stack--ver m-stack--desktop">
+        <!-- begin::Horizontal Menu -->
+        <div class="m-stack__item m-stack__item--fluid m-header-menu-wrapper">
+            <button class="m-aside-header-menu-mobile-close  m-aside-header-menu-mobile-close--skin-light " id="m_aside_header_menu_mobile_close_btn">
+                <i class="la la-close"></i>
+            </button>
+            <nav id="m_header_menu" class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light "
+                 aria-label="@L("TopMenu")">
+                <ul class="m-menu__nav  m-menu__nav--submenu-arrow"
+                    role="menubar"
+                    aria-label="@L("TopMenu")">
+                    @for (var i = 0; i < Model.Menu.Items.Count; i++)
+                    {
+                        var menuItem = Model.Menu.Items[i];
+                        @await Html.PartialAsync("Components/AppAreaNameMenu/_TopUserMenuItem", new UserMenuItemViewModel {
+                            MenuItem = menuItem,
+                            MenuItemIndex = i,
+                            ItemDepth = 0,
+                            RootLevel = true,
+                            CurrentPageName = Model.CurrentPageName,
+                            IsTabMenuUsed = theme.IsTabMenuUsed
+                        })
+                    }
+                </ul>
+            </nav>
+        </div>
+        <!-- end::Horizontal Menu -->
+    </div>
+</div>
